@@ -1,4 +1,6 @@
 import requests
+import pymongo
+import json
 
 # grab the URL of the webpage we are scraping
 URL = "https://serenesforest.net/binding-blade/classes/base-stats/"
@@ -63,12 +65,55 @@ for x in range(len(splitText)):
     statList[x] = subList
     subList = []
 
+
+def send_json_to_mongodb(json_data, collection_name):
+    # connect to mongodb
+    client = pymongo.MongoClient("mongodb://localhost:27017")
+
+    # select the database
+    db = client["FireEmblemData"]
+
+    # select the collection
+    collection = db[collection_name]
+
+    # insert the JSON document into the collection
+    result = collection.insert_one(json_data)
+
+    print("Document inserted with ID:", result.inserted_id)
+
+
 # testing space
+
+# create a json with the data given to be sent to a collection
+def create_class_json(name, stats):
+    created_json = {
+        "name": name,
+        "movement": stats[-1],
+        "base_stats": {
+            "HP": stats[0],
+            "AT/MAG": stats[1]
+        }
+
+    }
+    return created_json
+
+
+# collection name and json to be sent
+collection_name = "Classes"
+send_json = create_class_json(nameList[-2], statList[-2])
+
+# test cases to know where everything is
 print(nameList)
 print(statList)
 
-y = 0
+y = 1
+k = 1
 for x in nameList:
     print(y)
     print(x)
-    y+=1
+    y += 1
+
+for j in statList:
+    print(k)
+    print(j)
+    k += 1
