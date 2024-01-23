@@ -85,22 +85,58 @@ def send_json_to_mongodb(json_data, collection_name):
 # testing space
 
 # create a json with the data given to be sent to a collection
-def create_class_json(name, stats):
+def create_class_json(name, stats, growthList, weapon, unit_type, unit_race):
     created_json = {
         "name": name,
+        "type": unit_type,
+        "race": unit_race,
+        "stage": "Base",
+        "base_weapon_ranks": {
+            weapon: "D"
+        },
+        "max_weapon_ranks": {
+            weapon: "A"
+        },
         "movement": stats[-1],
         "base_stats": {
-            "HP": stats[0],
-            "AT/MAG": stats[1]
+            "hp": stats[0],
+            "str/mag": stats[1],
+            "skl": stats[2],
+            "spd": stats[3],
+            "lck": stats[4],
+            "def": stats[5],
+            "res": stats[6],
+            "con": stats[7]
+        },
+        "max_stats": {
+            "hp": 60,
+            "str/mag": 20,
+            "skl": 20,
+            "spd": 20,
+            "lck": 30,
+            "def": 20,
+            "res": 20,
+            "con": 0
+        },
+        "growth_rates": {
+            "hp": 80,
+            "str/mag": 40,
+            "skl": 40,
+            "spd": 32,
+            "lck": 30,
+            "def": 18,
+            "res": 15,
+            "con": 0
         }
-
     }
+
     return created_json
 
 
 # collection name and json to be sent
 collection_name = "Classes"
-send_json = create_class_json(nameList[-2], statList[-2])
+growthList = []
+send_json = create_class_json(nameList[-2], statList, growthList)
 
 # test cases to know where everything is
 print(nameList)
