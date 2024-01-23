@@ -130,8 +130,11 @@ def create_class_json(name, stats, growths, wpn, unit_type, unit_race):
     return json.dumps(created_json)
 
 
-# URL and database collection name being used
+# URLS and database collection name being used
 URL = "https://serenesforest.net/binding-blade/classes/base-stats/"
+URL_G = "https://serenesforest.net/binding-blade/classes/growth-rates/"
+URL_M = "https://serenesforest.net/binding-blade/classes/maximum-stats/"
+URL_P = "https://serenesforest.net/binding-blade/classes/promotion-gains/"
 collection_name = "Classes"
 
 # testing information
