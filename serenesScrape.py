@@ -82,6 +82,7 @@ def send_json_to_mongodb(json_data, collection_name):
 
 
 # create a json with the data given to be sent to a collection
+# this version only works for base classes
 def create_class_json(name, stats, growths, wpn, unit_type, unit_race):
     created_json = {
         "name": name,
@@ -113,17 +114,79 @@ def create_class_json(name, stats, growths, wpn, unit_type, unit_race):
             "lck": 30,
             "def": 20,
             "res": 20,
-            "con": 0
+            "con": 20
         },
         "growth_rates": {
             "hp": growths[0],
             "str/mag": growths[1],
             "skl": growths[2],
             "spd": growths[3],
-            "lck": growths[-1],
+            "lck": growths[6],
             "def": growths[4],
             "res": growths[5],
             "con": 0
+        }
+    }
+
+    return json.dumps(created_json)
+
+
+# create a json with the data given to be sent to a collection
+# this version only works for advanced classes
+def create_adv_class_json(name, stats, max_stats, growths, promos, wpn, wpn2, unit_type, unit_race):
+    created_json = {
+        "name": name,
+        "type": unit_type,
+        "race": unit_race,
+        "stage": "Advanced",
+        "base_weapon_ranks": {
+            wpn: "C",
+            wpn2: "E"
+        },
+        "max_weapon_ranks": {
+            wpn: "S",
+            wpn2: "S"
+        },
+        "movement": stats[-1],
+        "base_stats": {
+            "hp": stats[0],
+            "str/mag": stats[1],
+            "skl": stats[2],
+            "spd": stats[3],
+            "lck": stats[4],
+            "def": stats[5],
+            "res": stats[6],
+            "con": stats[7]
+        },
+        "max_stats": {
+            "hp": 60,
+            "str/mag": max_stats[0],
+            "skl": max_stats[1],
+            "spd": max_stats[2],
+            "lck": 30,
+            "def": max_stats[3],
+            "res": max_stats[4],
+            "con": max_stats[5]
+        },
+        "growth_rates": {
+            "hp": growths[0],
+            "str/mag": growths[1],
+            "skl": growths[2],
+            "spd": growths[3],
+            "lck": growths[6],
+            "def": growths[4],
+            "res": growths[5],
+            "con": 0
+        },
+        "promotion_gains": {
+            "hp": promos[1],
+            "str/mag": promos[2],
+            "skl": promos[3],
+            "spd": promos[4],
+            "lck": 0,
+            "def": promos[5],
+            "res": promos[6],
+            "con": promos[7]
         }
     }
 
@@ -140,40 +203,38 @@ collection_name = "Classes"
 # testing information
 # growthList will be replaced with the actual growths data
 # weapon, unitType, and raceType will be user input
-growthList = [50, 50, 50, 50, 50, 50, 50]
+promoList = ["promo", 4, 4, 4, 4, 4, 4, 4, 4, "rank"]
+maxList = [25, 25, 25, 25, 25, 25]
 weapon = "swords"
+weapon2 = "lances"
 unitType = "Infantry"
 unitRace = "Human"
 
 # call the functions to get the data and create a json
 nameList, statList = get_data_from_page(URL)
-send_json = create_class_json(nameList[-2], statList[-2], growthList, weapon, unitType, unitRace)
+nameList, growthList = get_data_from_page(URL_G)
 
+#page is significantly shorter so error on pop
+#nameList, maxList = get_data_from_page(URL_M)
+send_json = create_class_json(nameList[-2], statList[-2], growthList[-2], weapon, unitType, unitRace)
+send_json2 = create_adv_class_json(nameList[1], statList[1], maxList, growthList[1], promoList, weapon, weapon2, unitType, unitRace)
 # call the function to add the data to the database
 # send_json_to_mongodb(send_json, collection_name)
 
 # test cases to know where everything is, its format, and its
-print(nameList)
-print(statList)
+#print(nameList)
+#print(statList)
+#print(growthList2)
 print(send_json)
+print(send_json2)
 
-# print the data into a files
-y = 1
-file = open("binding_blade_table.txt", "w")
-for x in nameList:
-    file.write(str(y) + "\n")
-    file.write(x + "\n")
-    file.write(str(statList[y - 1]) + "\n")
-    y += 1
-file.close()
-
-#k = 1
+# print the data into a files (remove comments when data is updated)
+#y = 1
+#file = open("binding_blade_table.txt", "w")
 #for x in nameList:
-#    print(y)
-#    print(x)
+#    file.write(str(y) + "\n")
+#    file.write(x + "\n")
+#    file.write(str(statList[y - 1]) + "\n")
 #    y += 1
+#file.close()
 
-#for j in statList:
-#    print(k)
-#    print(j)
-#    k += 1

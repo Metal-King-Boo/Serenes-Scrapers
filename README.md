@@ -1,5 +1,5 @@
 # Serenes-Scrapers
-Mini repository for the scrapers made for pullind information out of the SerenesForest site. This takes the table information and will place them in a MongoDB for use in a future Fire Emblem API. There are plans to use the data for the [true-hit-sim](https://github.com/Metal-King-Boo/true-hit-sim). The current plan is to get most of the data uploads to be automated or at least sped up from manual entry, starting with Binding Blade. When everything is standardized and streamlined I can move to other games with ease and swiftness.
+Mini repository for the scrapers made for pulling information out of the SerenesForest site. This takes the table information and will place them in a MongoDB for use in a future Fire Emblem API. There are plans to use the data for the [true-hit-sim](https://github.com/Metal-King-Boo/true-hit-sim). The current plan is to get most of the data uploads to be automated or at least sped up from manual entry, starting with Binding Blade. When everything is standardized and streamlined I can move to other games with ease and swiftness.
 
 ## Directory
 ### Class Scraper
