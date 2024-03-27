@@ -147,7 +147,7 @@ unitRace = "Human"
 
 # call the functions to get the data and create a json
 nameList, statList = get_data_from_page(URL)
-send_json = create_class_json(nameList[-2], statList, growthList, weapon, unitType, unitRace)
+send_json = create_class_json(nameList[-2], statList[-2], growthList, weapon, unitType, unitRace)
 
 # call the function to add the data to the database
 # send_json_to_mongodb(send_json, collection_name)
@@ -157,14 +157,23 @@ print(nameList)
 print(statList)
 print(send_json)
 
+# print the data into a files
 y = 1
-k = 1
+file = open("binding_blade_table.txt", "w")
 for x in nameList:
-    print(y)
-    print(x)
+    file.write(str(y) + "\n")
+    file.write(x + "\n")
+    file.write(str(statList[y - 1]) + "\n")
     y += 1
+file.close()
 
-for j in statList:
-    print(k)
-    print(j)
-    k += 1
+#k = 1
+#for x in nameList:
+#    print(y)
+#    print(x)
+#    y += 1
+
+#for j in statList:
+#    print(k)
+#    print(j)
+#    k += 1
